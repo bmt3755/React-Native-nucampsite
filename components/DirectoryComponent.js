@@ -1,31 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { FlatList } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { CAMPSITES } from '../shared/campsites';
 
-function Directory(props) {
+class Directory extends Component {
 
-    //an object is passed by default from flatlist, we are destructuring to get one of the properties {item}
-    // FlatList is also similar like map. 
-    //It will iterate through every item in the object array given in data param and applies the renderItem function to every single item
-    const renderDirectoryItem = ({item}) => {
+    constructor(props) {
+        super(props);
+        this.state = {
+            campsites: CAMPSITES
+        };
+    }
+
+    //configuring header title using static keyword. In JS static sets a method on the class instead of on object
+    static navigationOptions = {
+        title: 'Directory'
+    }
+
+    render() {
+        //destructuring navigate function from navigation prop
+        const { navigate } = this.props.navigation;
+
+        const renderDirectoryItem = ({item}) => {
+            return (
+                <ListItem
+                    title={item.name}
+                    subtitle={item.description}
+                    //navigate(name of the screen to navigate to, id of the campsite that was pressed)
+                    onPress={() => navigate('CampsiteInfo', { campsiteId: item.id })}
+                    leftAvatar={{ source: require('./images/react-lake.jpg')}}
+                />
+            );
+        };
+
         return (
-            <ListItem
-                title={item.name}
-                subtitle={item.description}
-                onPress={() => props.onPress(item.id)}
-                leftAvatar={{ source: require('./images/react-lake.jpg')}}
+            <FlatList
+                data={this.state.campsites}
+                renderItem={renderDirectoryItem}
+                keyExtractor={item => item.id.toString()}
             />
         );
-    };
-
-    return (
-        //loosely equivalent to ul and ui tags in HTML but takes 3 params
-        <FlatList
-            data={props.campsites}
-            renderItem={renderDirectoryItem}
-            keyExtractor={item => item.id.toString()}
-        />
-    );
+    }
 }
 
 export default Directory;
