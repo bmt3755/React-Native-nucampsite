@@ -4,27 +4,8 @@ import {ScrollView } from 'react-native';
 import { Card, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
-// import { PARTNERS } from '../shared/partners';
-// import { CAMPSITES } from '../shared/campsites';
-// import { PROMOTIONS } from '../shared/promotions';
-// import { PARTNERS } from '../shared/partners';
+import Loading from './LoadingComponent';
 
-//destructuring from props object
-// function RenderItem({item}) {
-//     if (item) {
-//         return (
-//             <Card
-//                 featuredTitle={item.name}
-//                 image={require('./images/react-lake.jpg')}
-//             >
-//                 <Text style={{margin: 10}}>
-//                     {item.description}
-//                 </Text>
-//             </Card>
-//         );
-//     }
-//     return <View />;
-// }
 const mapStateToProps = state => {
     return {
         partners: state.partners
@@ -60,11 +41,30 @@ class About extends Component {
                 />
             );
         };
+
+        if (this.props.partners.isLoading) {
+            return (
+                <ScrollView>
+                    <Mission />
+                    <Card
+                        title='Community Partners'>
+                        <Loading />
+                    </Card>
+                </ScrollView>
+            );
+        }
+        if (this.props.partners.errMess) {
+            return (
+                <ScrollView>
+                    <Mission />
+                    <Card
+                        title='Community Partners'>
+                        <Text>{this.props.partners.errMess}</Text>
+                    </Card>
+                </ScrollView>
+            );
+        }
         return (
-            //ScrollView component is used to render groups or lists of items like flatList
-            //major difference is scrollvew loads all its child components at once
-            //FlatList uses Lazy loading - only a part of a list rendered at a time, the part thats on0-screen. The parts that are scrolled off screen are removed from memory.
-            //flatlist is efficient for longer lists 
             <ScrollView>
                     <Mission />
                     <Card 

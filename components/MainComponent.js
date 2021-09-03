@@ -122,21 +122,6 @@ const ContactNavigator = createStackNavigator(
         })
     }
 );
-
-//const MainNavigator = createDrawerNavigator(
-    //first argument should contain the objects to the screens that will be in the drawer
-    //We want to route then through the stack navigator
-    // {
-    //     Home: { screen: HomeNavigator },
-    //     Directory: { screen: DirectoryNavigator },
-    //     About: { screen: AboutNavigator},
-    //     Contact: { screen: ContactNavigator}        
-    // },
-    //Optional: we are setting background color
-//     {
-//         drawerBackgroundColor: '#CEC8FF'
-//     }
-// );
 const CustomDrawerContentComponent = props => (
     <ScrollView>
         <SafeAreaView 
@@ -156,8 +141,7 @@ const CustomDrawerContentComponent = props => (
 );
 
 const MainNavigator = createDrawerNavigator(
-    {
-        Home: {
+    {Home: {
             screen: HomeNavigator,
             navigationOptions: {
                 drawerIcon: ({tintColor}) => (
@@ -204,7 +188,7 @@ const MainNavigator = createDrawerNavigator(
                 drawerIcon: ({tintColor}) => (
                     <Icon
                         name='address-card'
-                        type='font-awesome' 
+                        type='font-awesome'
                         size={24}
                         color={tintColor}
                     />
@@ -215,14 +199,13 @@ const MainNavigator = createDrawerNavigator(
     {
         drawerBackgroundColor: '#CEC8FF',
         contentComponent: CustomDrawerContentComponent
-    }
-);
+    });
 
-//Always wrap the top level navigator with the createAppContainer
-const AppNavigator = createAppContainer(MainNavigator)
+
+const AppNavigator = createAppContainer(MainNavigator);
 
 class Main extends Component {
-
+    
     componentDidMount() {
         this.props.fetchCampsites();
         this.props.fetchComments();
@@ -230,15 +213,12 @@ class Main extends Component {
         this.props.fetchPartners();
     }
     
-    render() {
-        return (
-            <View style={{
-                flex: 1,
-                paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight
-            }}>
-                <AppNavigator />
-            </View>
-        );
+    render() 
+    {return(<View style={{flex: 1,
+                            paddingTop: Platform.OS === "ios" ? 0 : Constants.statusBarHeight
+                        }}>
+                        <AppNavigator />
+                        </View>);
     }
 }
 
