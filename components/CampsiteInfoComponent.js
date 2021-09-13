@@ -210,15 +210,15 @@ class CampsiteInfo extends Component {
                             leftIcon={{ type: 'font-awesome', name: 'user-o' }}
                             leftIconContainerStyle={{ paddingRight:10 }}
                             onChangeText={author => this.setState({author: author})}
-                            value={Text}
+                            value={this.state.author}
                             
                             />
                         <Input 
                             placeholder="Comment"
                             leftIcon={{ type: 'font-awesome', name: 'comment-o' }}
                             leftIconContainerStyle={{ paddingRight:10 }}
-                            onChangeText={comment => this.setState({comment: comment})}
-                            value={Text}           
+                            onChangeText={text => this.setState({text: text})}
+                            value={this.state.text}           
                         />
                         <View style={{margin: 10}}>
                             <Button
